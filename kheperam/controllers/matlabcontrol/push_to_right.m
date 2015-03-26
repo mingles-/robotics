@@ -9,19 +9,16 @@ classdef push_to_right < handle
             z = obj.state ~= 0;
         end
         
-        function y = do_action(obj)
+        function y = do_action(obj, odom)
             obj.state = 1 + obj.state;
             if obj.state == 1
-                wb_differential_wheels_set_speed(10, -10);
+                turn_right(1, odom);
             elseif obj.state == 2
-                wb_differential_wheels_set_speed(1, 1);
-            elseif obj.state == 3
-                wb_differential_wheels_set_speed(-10, 10);
+                move_forward(2, odom);
             end
             
-            
             % return false on last state
-            if obj.state == 3
+            if obj.state == 2
                 obj.state = 0;
             end
         end
